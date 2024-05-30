@@ -1,0 +1,68 @@
+package DataS;
+
+public class Array_Stack {
+    
+    static class ArrayStack {
+        private int[] stack;
+        private int size;
+        private int capacity;
+
+        public ArrayStack(int initialCapacity) {
+            stack = new int[initialCapacity];
+            capacity = initialCapacity;
+            size = 0;
+        }
+
+        public void push(int x) {
+            if (size == capacity) {
+                resize();
+            }
+            stack[size++] = x;
+        }
+
+        public int pop() {
+            if (isEmpty()) {
+                throw new RuntimeException("Stack is empty");
+            }
+            int poppedElement = stack[--size];
+            return poppedElement;
+        }
+
+        public int top() {
+            if (isEmpty()) {
+                throw new RuntimeException("Stack is empty");
+            }
+            return stack[size - 1];
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+
+        private void resize() {
+            int newCapacity = 2 * capacity;
+            int[] newStack = new int[newCapacity];
+            System.arraycopy(stack, 0, newStack, 0, capacity);
+            capacity = newCapacity;
+            stack = newStack;
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayStack stack = new ArrayStack(2);
+
+        stack.push(5);
+        stack.push(12);
+        stack.push(20);
+
+        System.out.println("Top element: " + stack.top());
+        System.out.println("Popped element: " + stack.pop());
+        System.out.println("Top element after pop: " + stack.top());
+        System.out.println("Is stack empty? " + stack.isEmpty());
+
+        stack.pop();
+        stack.pop();
+
+        System.out.println("Is stack empty after popping all elements? " + stack.isEmpty());
+    }
+}
