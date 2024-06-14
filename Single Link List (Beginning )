@@ -1,0 +1,57 @@
+package DataS;
+
+public class Single_Link_Beginning {
+
+    // Node class representing each element of the linked list
+    static class Node {
+        int data;          // Data stored in the node
+        Node next;         // Pointer to the next node in the list
+
+        // Constructor to create a new node
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    Node head; // Head of the list
+
+    // Constructor to initialize an empty list
+    public Single_Link_Beginning() {
+        head = null;
+    }
+
+    // Function to insert a node at the beginning of the list
+    public void insertAtBeginning(int data) {
+        // Create a new node with the given data
+        Node newNode = new Node(data);
+        // Point the new node's next to the current head
+        newNode.next = head;
+        // Update head to the new node
+        head = newNode;
+    }
+
+    // Function to print the linked list
+    public void printList() {
+        Node current = head; // Start from the head
+        // Traverse the list until the end
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("NULL");
+    }
+
+    // Main method to demonstrate the insertion
+    public static void main(String[] args) {
+        Single_Link_Beginning list = new Single_Link_Beginning();
+
+        // Insert nodes at the beginning
+        list.insertAtBeginning(01);
+        list.insertAtBeginning(20);
+        list.insertAtBeginning(25);
+
+        // Print the linked list
+        list.printList();
+    }
+}
