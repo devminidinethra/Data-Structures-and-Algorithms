@@ -1,0 +1,132 @@
+package DataS;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Insertion_Doubly_Linked_Specific_Location {
+    Node head;
+    Node tail;
+    Set<Integer> uniqueNumbers;
+    
+ 
+
+    public class Node {
+        int data;
+        Node next;
+        Node prev;
+
+        public Node(int data) {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+
+    public Insertion_Doubly_Linked_Specific_Location() {
+        this.head = null;
+        this.tail = null;
+        this.uniqueNumbers = new HashSet<>();
+    }
+
+    public void insert(int data) {
+        if (uniqueNumbers.contains(data)) {
+            System.out.println("This number already exists in the list: " + data);
+            return;
+        }
+
+        Node newNode = new Node(data);
+        uniqueNumbers.add(data);
+
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+    }
+
+    public void insertAtPosition(int data, int position) {
+        if (uniqueNumbers.contains(data)) {
+            System.out.println("This number already exists in the list: " + data);
+            return;
+        }
+
+        Node newNode = new Node(data);
+        uniqueNumbers.add(data);
+
+        if (position == 0) {
+            newNode.next = head;
+            if (head != null) {
+                head.prev = newNode;
+            }
+            head = newNode;
+            if (tail == null) {
+                tail = newNode;
+            }
+            return;
+        }
+
+        Node current = head;
+        int index = 0;
+        while (current != null && index < position - 1) {
+            current = current.next;
+            index++;
+        }
+
+        if (current == null) {
+            System.out.println("Position out of bounds");
+            return;
+        }
+
+        newNode.next = current.next;
+        if (current.next != null) {
+            current.next.prev = newNode;
+        }
+        current.next = newNode;
+        newNode.prev = current;
+
+        if (newNode.next == null) {
+            tail = newNode;
+        }
+    }
+
+    public void displayForward() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public void displayBackward() {
+        Node current = tail;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.prev;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Insertion_Doubly_Linked_Specific_Location dll = new Insertion_Doubly_Linked_Specific_Location();
+
+        dll.insert(10);
+        dll.insert(20);
+        dll.insert(30);
+        dll.insert(10); // This should print a message that the number already exists
+
+        dll.insertAtPosition(15, 1); // Insert 15 at position 1
+        dll.insertAtPosition(25, 3); // Insert 25 at position 3
+        dll.insertAtPosition(35, 10); // This should print "Position out of bounds"
+
+        System.out.println("Display Forward:");
+        dll.displayForward();
+
+        System.out.println("Display Backward:");
+        dll.displayBackward();
+    }
+}
