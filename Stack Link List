@@ -1,0 +1,95 @@
+package DataS;
+
+// Node class to represent each element in the linked list
+class Node {
+    int data;     // Data to be stored in the node
+    Node next;    // Pointer to the next node in the list
+
+    // Constructor to initialize the node with given data
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+// Stack class using a linked list
+public class StackLinkList {
+    private Node top;  // Top of the stack
+
+    // Constructor to initialize an empty stack
+    public StackLinkList() {
+        this.top = null;
+    }
+
+    // Method to check if the stack is empty
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    // Method to push a new element onto the stack
+    public void push(int data) {
+        Node newNode = new Node(data);  // Create a new node with the given data
+        newNode.next = top;            // Set the next of new node as top
+        top = newNode;                 // Move top to point to the new node
+        System.out.println("Pushed " + data + " onto the stack.");
+    }
+
+    // Method to pop the top element from the stack
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty. Cannot pop.");
+            return -1;  // Return -1 or throw exception for empty stack scenario
+        }
+        int poppedData = top.data;    // Get the data from the top node
+        top = top.next;               // Move top to point to the next node
+        System.out.println("Popped " + poppedData + " from the stack.");
+        return poppedData;
+    }
+
+    // Method to peek at the top element of the stack without removing it
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty. Cannot peek.");
+            return -1;  // Return -1 or throw exception for empty stack scenario
+        }
+        return top.data;  // Return data of the top node
+    }
+
+    // Method to print all elements currently in the stack
+    public void printStack() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty.");
+            return;
+        }
+        System.out.println("Elements in the stack:");
+        Node current = top;
+        while (current != null) {
+            System.out.println(current.data);
+            current = current.next;
+        }
+    }
+
+    // Main method to demonstrate the stack operations
+    public static void main(String[] args) {
+        StackLinkList stack = new StackLinkList();
+
+        // Pushing elements onto the stack
+        stack.push(20);
+        stack.push(30);
+        stack.push(40);
+        stack.push(50);
+
+        // Printing the stack
+        stack.printStack();
+
+        // Popping elements from the stack
+        stack.pop();
+        stack.pop();
+
+        // Printing the stack after popping
+        stack.printStack();
+
+        // Peeking at the top element
+        System.out.println("Top element of the stack: " + stack.peek());
+    }
+}
