@@ -1,0 +1,129 @@
+package DataS;
+
+public class Deletion_Doubly_Linked_Specific_Location {
+    // Inner class representing a node in the doubly linked list
+    private static class Node {
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+
+    private Node head; // Head of the doubly linked list
+    private Node tail; // Tail of the doubly linked list
+
+    public Deletion_Doubly_Linked_Specific_Location() {
+        this.head = null;
+        this.tail = null;
+    }
+
+    // Method to insert a node at the end of the list
+    public void insert(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+    }
+
+    // Method to delete a node at a specific position in the list
+    public void deleteAtPosition(int position) {
+        if (head == null) {
+            System.out.println("List is empty. Nothing to delete.");
+            return;
+        }
+
+        if (position == 0) {
+            if (head == tail) {
+                // Only one node in the list
+                head = null;
+                tail = null;
+            } else {
+                head = head.next;
+                head.prev = null;
+            }
+            return;
+        }
+
+        Node current = head;
+        int index = 0;
+        while (current != null && index < position) {
+            current = current.next;
+            index++;
+        }
+
+        if (current == null) {
+            System.out.println("Position out of bounds");
+            return;
+        }
+
+        if (current == tail) {
+            // Deleting the last node
+            tail = tail.prev;
+            tail.next = null;
+        } else {
+            current.prev.next = current.next;
+            if (current.next != null) {
+                current.next.prev = current.prev;
+            }
+        }
+    }
+
+    // Method to print the list forward
+    public void displayForward() {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        System.out.print("List (forward): ");
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    // Method to print the list backward
+    public void displayBackward() {
+        if (tail == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        System.out.print("List (backward): ");
+        Node current = tail;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.prev;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Deletion_Doubly_Linked_Specific_Location dll = new Deletion_Doubly_Linked_Specific_Location();
+
+        dll.insert(10);
+        dll.insert(20);
+        dll.insert(30);
+        dll.insert(40);
+
+        dll.displayForward(); // Display the list forward
+
+        dll.deleteAtPosition(1); // Delete node at position 1
+
+        dll.displayForward(); // Display the list forward after deletion
+
+        dll.displayBackward(); // Display the list backward after deletion
+    }
+}
