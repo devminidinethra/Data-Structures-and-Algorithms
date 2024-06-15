@@ -1,0 +1,76 @@
+package DataS;
+
+public class Insertion_Doubly_Link_End {
+    // Inner class representing a node in the doubly linked list
+    private static class Node {
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+
+    private Node head; // Head of the doubly linked list
+    private Node tail; // Tail of the doubly linked list
+
+    public Insertion_Doubly_Link_End() {
+        this.head = null;
+        this.tail = null;
+    }
+
+    // Method to insert a node at the end of the list
+    public void insertAtEnd(int data) {
+        Node newNode = new Node(data);
+        if (tail == null) {
+            // If list is empty, set newNode as both head and tail
+            head = newNode;
+            tail = newNode;
+        } else {
+            // Otherwise, insert newNode after the current tail
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+    }
+
+    // Method to print the list forward
+    public void printListForward() {
+        System.out.print("List (forward): ");
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    // Method to print the list backward
+    public void printListBackward() {
+        System.out.print("List (backward): ");
+        Node current = tail;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.prev;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Insertion_Doubly_Link_End dll = new Insertion_Doubly_Link_End();
+
+        // Insert nodes at the end
+        dll.insertAtEnd(11);
+        dll.insertAtEnd(27);
+        dll.insertAtEnd(31);
+
+        // Print the list forward
+        dll.printListForward();
+
+        // Print the list backward
+        dll.printListBackward();
+    }
+}
