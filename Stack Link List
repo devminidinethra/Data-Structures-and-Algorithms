@@ -1,20 +1,20 @@
 package DataS;
 
-// Node class to represent each element in the linked list
-class Node {
-    int data;     // Data to be stored in the node
-    Node next;    // Pointer to the next node in the list
-
-    // Constructor to initialize the node with given data
-    Node(int data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
 // Stack class using a linked list
 public class StackLinkList {
     private Node top;  // Top of the stack
+    
+ // Node class to represent each element in the linked list
+    class Node {
+        int data;     // Data to be stored in the node
+        Node next;    // Pointer to the next node in the list
+
+        // Constructor to initialize the node with given data
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     // Constructor to initialize an empty stack
     public StackLinkList() {
