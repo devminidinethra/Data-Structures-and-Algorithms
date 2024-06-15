@@ -1,0 +1,124 @@
+package DataS;
+
+// Define the Node class
+
+
+// Define the Deletion_Single_Link_Specific_Location class
+public class Deletion_Single_Link_Specific_Location {
+    private Node head; // Head of the linked list
+    
+    class Node {
+        int data;
+        Node next;
+
+        // Constructor to initialize a new node with given data
+        public Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Constructor to initialize an empty linked list
+    public Deletion_Single_Link_Specific_Location() {
+        this.head = null;
+    }
+    
+
+    // Method to insert a node at a specific location in the linked list
+    public void insertAtLocation(int data, int position) {
+        Node newNode = new Node(data); // Create a new node with the given data
+        
+        // If inserting at the head position
+        if (position == 0) {
+            newNode.next = head;
+            head = newNode;
+            return;
+        }
+        
+        Node current = head;
+        int currentPosition = 0;
+        
+        // Traverse to the node just before the position
+        while (currentPosition < position - 1 && current != null) {
+            current = current.next;
+            currentPosition++;
+        }
+        
+        // If position is out of bounds
+        if (current == null) {
+            System.out.println("Invalid position. Inserting at the end.");
+            return;
+        }
+        
+        // Insert the new node at the specified position
+        newNode.next = current.next;
+        current.next = newNode;
+    }
+
+    // Method to delete a node at a specific location in the linked list
+    public void deleteAtLocation(int position) {
+        // If the list is empty, nothing to delete
+        if (head == null) {
+            System.out.println("List is empty. Nothing to delete.");
+            return;
+        }
+        
+        // If deleting the head node
+        if (position == 0) {
+            head = head.next;
+            return;
+        }
+        
+        Node current = head;
+        int currentPosition = 0;
+        
+        // Traverse to the node just before the position
+        while (currentPosition < position - 1 && current != null) {
+            current = current.next;
+            currentPosition++;
+        }
+        
+        // If position is out of bounds
+        if (current == null || current.next == null) {
+            System.out.println("Invalid position. No node found to delete.");
+            return;
+        }
+        
+        // Skip the node at the specified position
+        current.next = current.next.next;
+    }
+
+    // Method to print the linked list
+    public void printList() {
+        Node current = head; // Start from the head node
+        System.out.print("Linked List: ");
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    // Main method to test the implementation
+    public static void main(String[] args) {
+        Deletion_Single_Link_Specific_Location list = new Deletion_Single_Link_Specific_Location(); // Create an instance of Deletion_Single_Link_Specific_Location
+        
+        // Insert nodes at specific locations
+        list.insertAtLocation(1, 0); // Insert 1 at position 0 (head)
+        list.insertAtLocation(2, 1); // Insert 2 at position 1
+        list.insertAtLocation(3, 1); // Insert 3 at position 1
+        
+        // Print the linked list
+        System.out.println("Linked List after insertions:");
+        list.printList(); // Output: Linked List: 1 3 2
+        
+        // Delete node at specific locations
+        list.deleteAtLocation(1); // Delete node at position 1
+     
+        
+        // Print the linked list after deletions
+        System.out.println("Linked List after deletions:");
+        list.printList(); // Output: Linked List: 3
+    }
+}
+
