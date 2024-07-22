@@ -1,0 +1,97 @@
+package DataS;
+
+class LinkedListStack {
+    private Node top;
+
+    LinkedListStack() {
+        this.top = null;
+    }
+    
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+
+    // Push operation: Add an element to the stack
+    public void push(int data) {
+        Node newNode = new Node(data);
+        if (top == null) {
+            top = newNode;
+        } else {
+            newNode.next = top;
+            top = newNode;
+        }
+    }
+
+    // Pop operation: Remove the top element from the stack
+    public int pop() {
+        if (top == null) {
+            System.out.println("Stack is empty");
+            return -1;
+        }
+        int data = top.data;
+        top = top.next;
+        return data;
+    }
+
+    // Peek operation: Get the top element without removing it
+    public int peek() {
+        if (top == null) {
+            System.out.println("Stack is empty");
+            return -1;
+        }
+        return top.data;
+    }
+
+    // Check if the stack is empty
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    // Display the stack elements
+    public void display() {
+        if (top == null) {
+            System.out.println("Stack is empty");
+            return;
+        }
+        Node temp = top;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        LinkedListStack stack = new LinkedListStack();
+
+        // Test push operation
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        System.out.println("Stack after pushing 10, 20, 30:");
+        stack.display();  // Output: 30 20 10
+
+        // Test pop operation
+        System.out.println("Popped element: " + stack.pop());  // Output: 30
+        System.out.println("Stack after pop operation:");
+        stack.display();  // Output: 20 10
+
+        // Test peek operation
+        System.out.println("Top element: " + stack.peek());  // Output: 20
+
+        // Test isEmpty operation
+        System.out.println("Is stack empty? " + stack.isEmpty());  // Output: false
+
+        // Pop remaining elements
+        stack.pop();
+        stack.pop();
+        System.out.println("Is stack empty after popping all elements? " + stack.isEmpty());  // Output: true
+    }
+}
