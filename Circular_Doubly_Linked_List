@@ -1,0 +1,111 @@
+package DataS;
+
+class CircularDoublyLinkedList {
+    Node head;
+
+    CircularDoublyLinkedList() {
+        head = null;
+    }
+
+    class Node {
+        int data;
+        Node next;
+        Node prev;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+    // Insertion at the beginning
+    void insertAtBeginning(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            newNode.next = newNode;
+            newNode.prev = newNode;
+        } else {
+            Node last = head.prev;
+            newNode.next = head;
+            newNode.prev = last;
+            last.next = newNode;
+            head.prev = newNode;
+            head = newNode;
+        }
+    }
+
+    // Insertion at the end
+    void insertAtEnd(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            newNode.next = newNode;
+            newNode.prev = newNode;
+        } else {
+            Node last = head.prev;
+            newNode.next = head;
+            newNode.prev = last;
+            last.next = newNode;
+            head.prev = newNode;
+        }
+    }
+
+    // Insertion at a specific location
+    void insertAtPosition(int data, int position) {
+        Node newNode = new Node(data);
+        if (position == 1) {
+            insertAtBeginning(data);
+            return;
+        }
+        Node temp = head;
+        for (int i = 1; i < position - 1 && temp.next != head; i++) {
+            temp = temp.next;
+        }
+        Node nextNode = temp.next;
+        newNode.next = nextNode;
+        newNode.prev = temp;
+        temp.next = newNode;
+        nextNode.prev = newNode;
+    }
+
+    // Display the list
+    void display() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        Node temp = head;
+        do {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        } while (temp != head);
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        CircularDoublyLinkedList cdll = new CircularDoublyLinkedList();
+
+        // Insertion at the beginning
+        System.out.println("Insertion at the beginning:");
+        cdll.insertAtBeginning(1);
+        cdll.display();  // Output: 1
+        cdll.insertAtBeginning(2);
+        cdll.display();  // Output: 2 1
+        cdll.insertAtBeginning(3);
+        cdll.display();  // Output: 3 2 1
+
+        // Insertion at the end
+        System.out.println("Insertion at the end:");
+        cdll.insertAtEnd(4);
+        cdll.display();  // Output: 3 2 1 4
+        cdll.insertAtEnd(5);
+        cdll.display();  // Output: 3 2 1 4 5
+
+        // Insertion at a specific position
+        System.out.println("Insertion at a specific position:");
+        cdll.insertAtPosition(6, 3);
+        cdll.display();  // Output: 3 2 6 1 4 5
+    }
+}
