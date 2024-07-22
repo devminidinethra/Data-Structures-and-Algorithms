@@ -1,0 +1,169 @@
+package DataS;
+
+class CircularDoublyLLDelete {
+    Node head;
+
+    CircularDoublyLLDelete() {
+        head = null;
+    }
+
+    class Node {
+        int data;
+        Node next;
+        Node prev;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+    // Insertion methods (to populate the list for testing deletions)
+    void insertAtBeginning(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            newNode.next = newNode;
+            newNode.prev = newNode;
+        } else {
+            Node last = head.prev;
+            newNode.next = head;
+            newNode.prev = last;
+            last.next = newNode;
+            head.prev = newNode;
+            head = newNode;
+        }
+    }
+
+    void insertAtEnd(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            newNode.next = newNode;
+            newNode.prev = newNode;
+        } else {
+            Node last = head.prev;
+            newNode.next = head;
+            newNode.prev = last;
+            last.next = newNode;
+            head.prev = newNode;
+        }
+    }
+
+    void insertAtPosition(int data, int position) {
+        Node newNode = new Node(data);
+        if (position == 1) {
+            insertAtBeginning(data);
+            return;
+        }
+        Node temp = head;
+        for (int i = 1; i < position - 1 && temp.next != head; i++) {
+            temp = temp.next;
+        }
+        Node nextNode = temp.next;
+        newNode.next = nextNode;
+        newNode.prev = temp;
+        temp.next = newNode;
+        nextNode.prev = newNode;
+    }
+
+    // Deletion at the beginning
+    void deleteAtBeginning() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        if (head.next == head) {  // Only one node in the list
+            head = null;
+        } else {
+            Node last = head.prev;
+            head = head.next;
+            head.prev = last;
+            last.next = head;
+        }
+    }
+
+    // Deletion at the end
+    void deleteAtEnd() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        if (head.next == head) {  // Only one node in the list
+            head = null;
+        } else {
+            Node last = head.prev;
+            Node secondLast = last.prev;
+            secondLast.next = head;
+            head.prev = secondLast;
+        }
+    }
+
+    // Deletion at a specific position
+    void deleteAtPosition(int position) {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        if (position == 1) {
+            deleteAtBeginning();
+            return;
+        }
+        Node temp = head;
+        for (int i = 1; i < position && temp.next != head; i++) {
+            temp = temp.next;
+        }
+        if (temp.next == head) {  // Position is at the end
+            deleteAtEnd();
+            return;
+        }
+        Node prevNode = temp.prev;
+        Node nextNode = temp.next;
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
+    }
+
+    // Display the list
+    void display() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        Node temp = head;
+        do {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        } while (temp != head);
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        CircularDoublyLLDelete cdll = new CircularDoublyLLDelete();
+
+        // Populate the list for testing deletions
+        cdll.insertAtBeginning(1);
+        cdll.insertAtBeginning(2);
+        cdll.insertAtBeginning(3);
+        cdll.insertAtEnd(4);
+        cdll.insertAtEnd(5);
+        cdll.insertAtPosition(6, 3);
+        System.out.println("Initial list:");
+        cdll.display();  // Output: 3 2 6 1 4 5
+
+        // Deletion at the beginning
+        System.out.println("Deletion at the beginning:");
+        cdll.deleteAtBeginning();
+        cdll.display();  // Output: 2 6 1 4 5
+
+        // Deletion at the end
+        System.out.println("Deletion at the end:");
+        cdll.deleteAtEnd();
+        cdll.display();  // Output: 2 6 1 4
+
+        // Deletion at a specific position
+        System.out.println("Deletion at a specific position:");
+        cdll.deleteAtPosition(2);
+        cdll.display();  // Output: 2 1 4
+    }
+}
